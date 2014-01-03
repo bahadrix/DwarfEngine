@@ -1,40 +1,8 @@
 ========================================================================
-    CONSOLE APPLICATION : SDLWork Project Overview
+    SDLWORK: DWARF SDL Engine Framework
 ========================================================================
 
-AppWizard has created this SDLWork application for you.
-
-This file contains a summary of what you will find in each of the files that
-make up your SDLWork application.
-
-
-SDLWork.vcxproj
-    This is the main project file for VC++ projects generated using an Application Wizard.
-    It contains information about the version of Visual C++ that generated the file, and
-    information about the platforms, configurations, and project features selected with the
-    Application Wizard.
-
-SDLWork.vcxproj.filters
-    This is the filters file for VC++ projects generated using an Application Wizard. 
-    It contains information about the association between the files in your project 
-    and the filters. This association is used in the IDE to show grouping of files with
-    similar extensions under a specific node (for e.g. ".cpp" files are associated with the
-    "Source Files" filter).
-
-SDLWork.cpp
-    This is the main application source file.
-
-/////////////////////////////////////////////////////////////////////////////
-Other standard files:
-
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named SDLWork.pch and a precompiled types file named StdAfx.obj.
-
-/////////////////////////////////////////////////////////////////////////////
-Other notes:
-
-AppWizard uses "TODO:" comments to indicate parts of the source code you
-should add to or customize.
-
-/////////////////////////////////////////////////////////////////////////////
+- Each entity is a Dwarf. 
+- All Dwarves are connected each other within tree relation ship.
+- If mother goes somewhere, all descendants of her go with her.
+- If mother rendered, all children rendered after her.
