@@ -84,12 +84,14 @@ int _tmain(int argc, _TCHAR* argv[]) {
 
 
 	testBut->setTexture(tx_testbut,NULL, &butPos);
-	std::vector<Dwarf*> block = Dwarf::getRenderBlock(Window::eve);
-	for(int i=0; i < block.size(); i++) {
-
-		printf("%d. %s\n",i, block.at(i)->name.c_str());
+	/*
+	std::vector<Dwarf*> renderBlock;
+	Window::eve->getRenderBlock(&renderBlock);
+	printf("Rendering %d dwarves:\n", renderBlock.size());
+	for(int i=0; i < renderBlock.size(); i++) {
+		printf("%d. %s\n",i, renderBlock.at(i)->name.c_str());
 	}
-
+	*/
 	//----
 
 
@@ -130,24 +132,14 @@ int _tmain(int argc, _TCHAR* argv[]) {
 				e.type == SDL_MOUSEBUTTONUP ||
 				e.type == SDL_MOUSEWHEEL) {				
 				Window::onMouseEvent(&e);
-			} 
-			
-			
+			} 	
         }
 		//RENDERING
 		Window::Clear();
-			// "Let's rock my handy dwarves!"
-			Window::eve->render(); 
-			Dwarf::getRenderBlock(Window::eve);
-		Window::Present();
-		
+		Window::render();
+		Window::Present();	
     }
-
     Window::Quit();
-
-
-
-
 	return 0;
 }
 

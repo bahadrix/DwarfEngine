@@ -51,8 +51,13 @@ void Dwarf::render(void) {
 		}
 	}
 
+	/*
 	for(int c=0; c < children.size(); c++)
 		children.at(c)->render();
+	*/
+
+
+
 }
 
 
@@ -78,6 +83,7 @@ Dwarf::~Dwarf(void){
 	if(this->texture != nullptr) // Have a texture
 		SDL_DestroyTexture(texture);
 
+	//Clear by depth first
 	for(int c=0; c < children.size(); c++) {
 		Dwarf* child = children.back();
 		children.pop_back();
@@ -90,6 +96,8 @@ Dwarf::~Dwarf(void){
 void Dwarf::translateDelta( int dx, int dy ) {
 	dstRect->x += dx;
 	dstRect->y += dy;
+
+	//Depth first bound
 	for(int c=0; c < children.size(); c++)
 		children.at(c)->translateDelta(dx, dy);
 }
@@ -107,24 +115,6 @@ bool Dwarf::isInRect( int x, int y ) {
 	} else {
 		return 0;
 	}
-}
-
-std::vector<Dwarf*> Dwarf::getRenderBlock( Dwarf* dwarf ) {
-	std::vector<Dwarf*> block;
-
-	std::queue<Dwarf*> que;
-
-	Dwarf* current;
-
-	que.push(dwarf);
-	int c = 0;
-	while(!que.empty()) {
-		current = que.front(); que.pop();
-		block.push_back(current);	
-		for(c = 0; c < current->children.size(); c++ )
-			que.push(current->children.at(c));
-	}
-	return block;
 }
 
 
@@ -159,9 +149,3 @@ void Dwarf::getRectangle( SDL_Rect *rect ){
 	rect->w = dstRect->w;
 	rect->h = dstRect->h;
 }
-
-
-
-
-
-

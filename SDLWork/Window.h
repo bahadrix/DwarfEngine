@@ -6,6 +6,7 @@
 #include <SDL.h>
 #include "Dwarf.h"
 #include <vector>
+#include <queue>
 
 /**
 *  Window management class, provides a simple wrapper around
@@ -38,13 +39,17 @@ public:
 	//Master dwarf
 	static Dwarf *eve;
 	
-
+	//Render 
+	static void render();
 
 private:
     static std::unique_ptr<SDL_Window, void (*)(SDL_Window*)> mWindow;
     static std::unique_ptr<SDL_Renderer, void (*)(SDL_Renderer*)> mRenderer;
     static SDL_Rect mBox;
 	static std::vector<Dwarf*> mouseListeners;
+	static std::vector<Dwarf*> *renderQueue;
+	static std::vector<Dwarf*>::iterator renderIterator;
+	static std::queue<Dwarf*> que;
 };
 
 #endif

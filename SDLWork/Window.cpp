@@ -5,9 +5,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-
+#include <vector>
 
 #include "Window.h"
+#include <queue>
 
 //Initialize the unique_ptr's deleters here
 std::unique_ptr<SDL_Window, void (*)(SDL_Window*)> Window::mWindow 
@@ -19,6 +20,9 @@ SDL_Rect Window::mBox;
 
 Dwarf *Window::eve;
 std::vector<Dwarf*> Window::mouseListeners;
+std::vector<Dwarf*> *Window::renderQueue;
+std::vector<Dwarf*>::iterator Window::renderIterator;
+std::queue<Dwarf*> Window::que;
 
 void Window::Init(std::string title){
     //initialize all SDL subsystems
@@ -46,6 +50,7 @@ void Window::Init(std::string title){
         throw std::runtime_error("Failed to create renderer");
 	Window::eve = new Dwarf(mRenderer.get());
 	Window::eve->name = "Eve";
+	renderQueue = new std::vector<Dwarf*>();
 }
 void Window::Quit(){
     delete eve;
@@ -102,9 +107,26 @@ void Window::registerMouseListener( Dwarf *dwarf ) {
 	mouseListeners.push_back(dwarf);
 }
 
-void Window::onMouseEvent( SDL_Event *event )
-{
+void Window::onMouseEvent( SDL_Event *event ) {
 	for(int i = 0; i < mouseListeners.size(); i++) {
 		mouseListeners.at(i)->onMouseEvent(event);
 	}
+}
+
+void Window::render() {
+
+	//Render by BFS
+
+	que.push(eve);
+
+	while(!que.empty()) {
+
+		que.front()->render();
+		for(renderIterator = que.front()->children.begin(); renderIterator != que.front()->children.end(); ++renderIterator) {
+		//for(c = 0; c < que.front()->children.size(); c++ )
+			que.push((*renderIterator));
+		}
+		que.pop();
+	}
+
 }
