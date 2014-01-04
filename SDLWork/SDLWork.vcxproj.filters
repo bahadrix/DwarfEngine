@@ -48,6 +48,9 @@
     <ClInclude Include="Ease.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteDwarf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -75,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Ease.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteDwarf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

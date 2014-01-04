@@ -5,21 +5,18 @@
 
 
 Haulier::Haulier(void) {
-	startTime = NULL;
+	stop();
 }
 
 
-Haulier::~Haulier(void) {
-}
+Haulier::~Haulier(void) { }
 
 
 
 
-void Haulier::addRoute( int fromX, int fromY, int toX, int toY, int duration, EaseType easeType )
-{
+void Haulier::addRoute( int fromX, int fromY, int toX, int toY, int duration, EaseType easeType ){
 
-	//HaulierRoute route = {fromX, fromY, toX - fromX, toY - fromY, duration, easeType};
-	HaulierRoute *route = new HaulierRoute; //dinamik olara atamazsan sonra sapitiyo pzvnk
+	HaulierRoute *route = new HaulierRoute; //dinamik olarak atamazsan sonra sapitiyo pzvnk
 	route->duration = duration;
 	route->dX = toX - fromX;
 	route->dY = toY - fromY;
@@ -27,15 +24,11 @@ void Haulier::addRoute( int fromX, int fromY, int toX, int toY, int duration, Ea
 	route->fromY = fromY;
 	route->easeType = easeType;
 	routes.push(route);
-	
-	
-	//printf("\nRoute added: from(%d, %d) delta(%d, %d)",routes.front()->fromX, routes.front()->fromY, routes.front()->dX, routes.front()->dY);
-
 
 }
 
 void Haulier::addRoute( int toX, int toY, int duration, EaseType easeType ) {
-	HaulierRoute *route = new HaulierRoute; //dinamik olara atamazsan sonra sapitiyo pzvnk
+	HaulierRoute *route = new HaulierRoute; //dinamik olarak atamazsan sonra sapitiyo pzvnk
 	route->duration = duration;
 	route->dX = toX;
 	route->dY = toY;
@@ -65,13 +58,9 @@ void Haulier::move( Uint32 deltaTime ) {
 			currentRoute->dY = currentRoute->dY - currentRoute->fromY;
 		}
 	}
-	
 
 	if(deltaTime > currentRoute->duration)
 		deltaTime = currentRoute->duration;
-
-
-	
 
 	curPos.x = ceil(Ease::get(currentRoute->easeType, deltaTime, currentRoute->fromX, currentRoute->dX, currentRoute->duration));
 	curPos.y = ceil(Ease::get(currentRoute->easeType, deltaTime, currentRoute->fromY, currentRoute->dY, currentRoute->duration));
@@ -90,40 +79,22 @@ void Haulier::move( Uint32 deltaTime ) {
 
 
 void Haulier::preRender( void ) {
-
 	if(startTime != NULL) { // set this NULL to stop/bypass
 		move(SDL_GetTicks() - startTime);
 	}
 }
 
-void Haulier::start( void ) {
-	if(startTime == NULL) {
-		resetTimer();
-	}
-}
 
-void Haulier::stop( void ){
-	startTime = NULL;
-}
-
-
-
-void Haulier::resetTimer( void ) {
-	startTime = SDL_GetTicks();
-}
-
-void Haulier::clearRoutes( void )
-{
+void Haulier::clearRoutes( void ) {
 	if(!routes.empty())
 		std::queue<HaulierRoute*>().swap(routes);
 }
 
-void Haulier::halt( void )
-{
-	stop();
+void Haulier::onHalt( void ) {
 	currentRoute = NULL;
 	clearRoutes();
-
 }
+
+
 
 
