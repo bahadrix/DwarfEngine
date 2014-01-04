@@ -31,7 +31,7 @@ void Window::Init(std::string title){
     mBox.x = 0;
     mBox.y = 0;
     mBox.w = 1000;
-    mBox.h = 800;
+    mBox.h = 720;
     //Create our window
     mWindow.reset(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
         mBox.w, mBox.h, SDL_WINDOW_SHOWN));

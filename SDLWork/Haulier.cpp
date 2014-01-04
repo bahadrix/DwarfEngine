@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Haulier.h"
 #include <iostream>
+#include "Ease.h"
 
 
 Haulier::Haulier(void) {
@@ -11,26 +12,9 @@ Haulier::Haulier(void) {
 Haulier::~Haulier(void) {
 }
 
-float Haulier::ease( HaulierEaseType easeType, float t,float b , float c, float d ) {
-	switch (easeType){
-	case HaulierEaseType::CUBIC_IN:
-		return c*(t/=d)*t*t + b;
-		break;
-	case HaulierEaseType::CUBIC_OUT:
-		return c*((t=t/d-1)*t*t + 1) + b;
-		break;
-	case HaulierEaseType::CUBIC_INOUT:
-		if ((t/=d/2) < 1) return c/2*t*t*t + b;
-		return c/2*((t-=2)*t*t + 2) + b;
-		break;
-	default:
 
-		break;
-	}
 
-}
-
-void Haulier::addRoute( int fromX, int fromY, int toX, int toY, int duration, HaulierEaseType easeType )
+void Haulier::addRoute( int fromX, int fromY, int toX, int toY, int duration, EaseType easeType )
 {
 
 	//HaulierRoute route = {fromX, fromY, toX - fromX, toY - fromY, duration, easeType};
@@ -49,7 +33,7 @@ void Haulier::addRoute( int fromX, int fromY, int toX, int toY, int duration, Ha
 
 }
 
-void Haulier::addRoute( int toX, int toY, int duration, HaulierEaseType easeType ) {
+void Haulier::addRoute( int toX, int toY, int duration, EaseType easeType ) {
 	HaulierRoute *route = new HaulierRoute; //dinamik olara atamazsan sonra sapitiyo pzvnk
 	route->duration = duration;
 	route->dX = toX;
@@ -88,8 +72,8 @@ void Haulier::move( Uint32 deltaTime ) {
 
 	
 
-	curPos.x = ceil(Haulier::ease(currentRoute->easeType, deltaTime, currentRoute->fromX, currentRoute->dX, currentRoute->duration));
-	curPos.y = ceil(Haulier::ease(currentRoute->easeType, deltaTime, currentRoute->fromY, currentRoute->dY, currentRoute->duration));
+	curPos.x = ceil(Ease::get(currentRoute->easeType, deltaTime, currentRoute->fromX, currentRoute->dX, currentRoute->duration));
+	curPos.y = ceil(Ease::get(currentRoute->easeType, deltaTime, currentRoute->fromY, currentRoute->dY, currentRoute->duration));
 	//printf("Time: %d/%u Current Pos:(%d, %d) Delta:(%d, %d)\n", deltaTime, currentRoute->duration, curPos.x, curPos.y, currentRoute->dX, currentRoute->dY);
 	
 	target->translate(&curPos);
@@ -121,8 +105,24 @@ void Haulier::stop( void ){
 	startTime = NULL;
 }
 
+
+
 void Haulier::resetTimer( void ) {
 	startTime = SDL_GetTicks();
+}
+
+void Haulier::clearRoutes( void )
+{
+	if(!routes.empty())
+		std::queue<HaulierRoute*>().swap(routes);
+}
+
+void Haulier::halt( void )
+{
+	stop();
+	currentRoute = NULL;
+	clearRoutes();
+
 }
 
 

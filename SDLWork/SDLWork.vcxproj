@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dwarf.h" />
+    <ClInclude Include="Ease.h" />
     <ClInclude Include="Haulier.h" />
     <ClInclude Include="Modifier.h" />
     <ClInclude Include="resource.h" />
@@ -97,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dwarf.cpp" />
+    <ClCompile Include="Ease.cpp" />
     <ClCompile Include="Haulier.cpp" />
     <ClCompile Include="Modifier.cpp" />
     <ClCompile Include="SceneDirector.cpp" />
@@ -110,6 +112,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SDLWork.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Users\vaıo\Desktop\1388791303_190305.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

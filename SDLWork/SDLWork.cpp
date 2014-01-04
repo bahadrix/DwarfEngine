@@ -33,7 +33,7 @@ int _tmain(int argc, _TCHAR* argv[]) {
 
         //Load the font and message
         std::string fontFile = "res/fonts/science.ttf";
-        std::string text = "Kick yo asses!";
+        std::string text = "Pointer Obssessed Sprite! by Bahadir";
         SDL_Color color = { 255, 255, 255 };
         tx_msg = Window::RenderText(text, fontFile, color, 24);
     }
