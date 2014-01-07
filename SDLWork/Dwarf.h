@@ -13,9 +13,7 @@ public:
 	void render(void);
 	void addModifier(Modifier* modifier);
 
-	void setTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect);
-	void setTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, 
-		double* angle, SDL_Point* pivot, SDL_RendererFlip flip);
+	virtual void setTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, double* angle = nullptr, SDL_Point* pivot = NULL, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE);
 	void translateDelta(int dx, int dy);
 	void translate(int x, int y);
 	void translate(SDL_Point *destination);
@@ -23,29 +21,31 @@ public:
 	void adopt(Dwarf* child);
 	bool isInRect(int x, int y);
 	void getPosition(SDL_Point *point);
-	void getRectangle(SDL_Rect *rect);
+	void getDstRect(SDL_Rect *rect);
+	void getSrcRect(SDL_Rect *rect);
+	void setSrcRect(SDL_Rect *rect);
 	//Fired only if registered to window's listeners
 	virtual void onMouseEvent(SDL_Event *event);
 	std::string name;
 	std::vector<Dwarf*> children;
+	virtual void onTextureSet(void);
+	virtual void onModifierStop(char* name, Modifier::StopState state);
 private:
 	
 	void init(SDL_Renderer* renderer, Dwarf *parent);
 	
-	SDL_Texture* texture;
+	
 	SDL_Rect* srcRect;
 	SDL_Rect* dstRect;
 	double* angle;
 	SDL_Point* pivot;
 	SDL_RendererFlip flip;
-
 	Dwarf *parent;
-	
 	std::vector<Modifier*> modifiers;
 
 protected:
 	SDL_Renderer* renderer;
-
+	SDL_Texture* texture;
 friend class Modifier;
 
 };

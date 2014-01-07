@@ -19,9 +19,10 @@ class Haulier : public Modifier
 {
 public:
 	Haulier(void);
+	
 	~Haulier(void);
 
-	virtual void preRender(void);
+	virtual void onRender(Uint32 deltaTime);
 	virtual void onHalt(void);
 	//fromX,fromY koordinatlarindan baslayarak gider
 	void addRoute(int fromX, int fromY, int toX, int toY, int duration, EaseType easeType);

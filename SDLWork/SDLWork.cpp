@@ -9,35 +9,41 @@
 #include "Dwarf.h"
 #include "SceneDirector.h"
 #include "SceneObjects.h"
+#include "SpriteDwarf.h"
+#include "CharacterFour.h"
+#include "MetaParser.h"
+#include "Config.h"
+
+
+void readConfig() {
+	Config *cfg = new Config();
+}
 
 int _tmain(int argc, _TCHAR* argv[]) {
-	
-
+	readConfig();
 	try {
         Window::Init("Living Bunkies");
-    }
-    catch (const std::runtime_error &e){
+    } catch (const std::runtime_error &e){
         std::cout << e.what() << std::endl;
         Window::Quit();
         return -1;
     }
 
     //Load up an image and some text
-    SDL_Texture *tx_img, *tx_msg, *tx_testbut;
+    SDL_Texture *tx_img, *tx_msg, *tx_testbut, *tx_sprite;
     try {
         //Load the image
-        std::string imgFile = "res/img/bg-grid-2.jpg";
+        std::string imgFile = "res/img/bg-grass.png";
         tx_img = Window::LoadImage(imgFile);
 
 		tx_testbut = Window::LoadImage("res/img/testbut.png");
-
+		tx_sprite = Window::LoadImage("res/img/bomba64.png");
         //Load the font and message
         std::string fontFile = "res/fonts/science.ttf";
         std::string text = "Pointer Obssessed Sprite! by Bahadir";
         SDL_Color color = { 255, 255, 255 };
         tx_msg = Window::RenderText(text, fontFile, color, 24);
-    }
-    catch (const std::runtime_error &e){
+    } catch (const std::runtime_error &e){
         //Catch error and crash
         std::cout << e.what() << std::endl;
         Window::Quit();
@@ -50,12 +56,10 @@ int _tmain(int argc, _TCHAR* argv[]) {
 
 	SDL_Rect textPos;
 	
-
-
 	SDL_QueryTexture(tx_msg, NULL, NULL, &textPos.w, &textPos.h);
 
-	textPos.x = Window::Box().w / 2 - textPos.w/2;
-	textPos.y = Window::Box().h / 2 - textPos.h/2;
+	textPos.x = 20;
+	textPos.y = 20;
 
 
 	//---
@@ -77,22 +81,37 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	SignalButton* testBut = new SignalButton();
 	testBut->name = "Test But";
 	director->adopt(testBut);
-	Window::registerMouseListener(testBut);
+	//Window::registerMouseListener(testBut);
 	SDL_Rect butPos = {100,100,0,0};
 	
 	SDL_QueryTexture(tx_testbut,NULL,NULL,&butPos.w, &butPos.h);
 
 
 	testBut->setTexture(tx_testbut,NULL, &butPos);
+	SDL_Rect bombaSpriteSize = {0,0,64,64};
+	SDL_Rect bombaGalDst = {250,300,64,64};
 	/*
-	std::vector<Dwarf*> renderBlock;
-	Window::eve->getRenderBlock(&renderBlock);
-	printf("Rendering %d dwarves:\n", renderBlock.size());
-	for(int i=0; i < renderBlock.size(); i++) {
-		printf("%d. %s\n",i, renderBlock.at(i)->name.c_str());
-	}
+	SpriteDwarf *bombaGal = new SpriteDwarf();
+	
+	director->adopt(bombaGal);
+	bombaGal->setTexture(tx_sprite,&bombaSpriteSize, &bombaGalDst);
+	int goUp = bombaGal->addAnimation(0,4);
+	bombaGal->playAnimation(0,700,0,0,0);
+	//Window::registerMouseListener(bombaGal);
 	*/
-	//----
+
+	CharacterFour *bombGal = new CharacterFour();
+	SpriteSlice upSlice = {0U,4U};
+	SpriteSlice downSlice = {11U,4U};
+	SpriteSlice leftSlice = {15U,4U};
+	SpriteSlice rightSlice = {4U,4U};
+	
+	bombGal->setTexture(upSlice, downSlice, leftSlice, rightSlice, tx_sprite, &bombaSpriteSize, &bombaGalDst);
+
+	director->adopt(bombGal);
+	Window::registerMouseListener(bombGal);
+//tx_sprite, 0U, 4U, 12U, 4U, 16U, 4U, 5U,4U
+	//--
 
 
     int angle = 0;

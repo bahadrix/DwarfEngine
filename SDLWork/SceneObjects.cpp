@@ -17,7 +17,7 @@ void SignalButton::onMouseEvent( SDL_Event *event )
 {
 	if(event->type == SDL_MOUSEBUTTONDOWN) {	
 		SDL_Rect rect;
-		getRectangle(&rect);
+		getDstRect(&rect);
 		haulier->halt();
 		haulier->addRoute(event->motion.x - rect.w/2, event->motion.y - rect.h/2, 720, EaseType::CIRC_INOUT);
 		haulier->start();

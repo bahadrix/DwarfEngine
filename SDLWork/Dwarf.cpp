@@ -50,33 +50,21 @@ void Dwarf::render(void) {
 			SDL_RenderCopy(renderer, texture, srcRect, dstRect);
 		}
 	}
-
-	/*
-	for(int c=0; c < children.size(); c++)
-		children.at(c)->render();
-	*/
-
-
-
 }
 
 
-
-void Dwarf::setTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect) {
+/************************************************************************/
+/* If it's sprite, sheet size is calculated by srcRect                  */
+/************************************************************************/
+void Dwarf::setTexture( SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, double* angle /*= nullptr*/, SDL_Point* pivot /*= NULL*/, SDL_RendererFlip flip /*= SDL_RendererFlip::SDL_FLIP_NONE*/ )
+{
 	this->texture = texture;
 	this->srcRect = srcRect;
-	this->dstRect = dstRect;
-	this->angle = nullptr;
-	
-}
-
-
-void Dwarf::setTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, double* angle, SDL_Point* pivot, SDL_RendererFlip flip) {
-	setTexture(texture, srcRect, dstRect);
+	this->dstRect = dstRect;	
 	this->angle = angle;
 	this->pivot = pivot;
 	this->flip = flip;
-
+	onTextureSet();
 }
 
 Dwarf::~Dwarf(void){
@@ -119,9 +107,11 @@ bool Dwarf::isInRect( int x, int y ) {
 
 
 void Dwarf::preRender( void ) {
+	
 	for(std::vector<Modifier*>::iterator modifierIterator = modifiers.begin(); modifierIterator != modifiers.end(); ++modifierIterator) {
 		(*modifierIterator)->preRender(); 
 	}
+	
 }
 
 void Dwarf::addModifier( Modifier* modifier ) {
@@ -143,9 +133,34 @@ void Dwarf::getPosition( SDL_Point *point ) {
 	point->y = dstRect->y;
 }
 
-void Dwarf::getRectangle( SDL_Rect *rect ){
+void Dwarf::getDstRect( SDL_Rect *rect ){
 	rect->x = dstRect->x;
 	rect->y = dstRect->y;
 	rect->w = dstRect->w;
 	rect->h = dstRect->h;
 }
+void Dwarf::getSrcRect( SDL_Rect *rect )
+{
+	rect->x = srcRect->x;
+	rect->y = srcRect->y;
+	rect->w = srcRect->w;
+	rect->h = srcRect->h;
+
+}
+void Dwarf::onTextureSet( void ){}
+
+void Dwarf::setSrcRect( SDL_Rect *rect ){
+	srcRect->h = rect->h;
+	srcRect->w = rect->w;
+	srcRect->x = rect->x;
+	srcRect->y = rect->y;
+
+	
+}
+
+
+void Dwarf::onModifierStop( char* name, Modifier::StopState state){}
+
+
+
+

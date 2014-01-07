@@ -9,6 +9,7 @@ Haulier::Haulier(void) {
 }
 
 
+
 Haulier::~Haulier(void) { }
 
 
@@ -39,10 +40,20 @@ void Haulier::addRoute( int toX, int toY, int duration, EaseType easeType ) {
 }
 
 
-void Haulier::move( Uint32 deltaTime ) {
-	
+void Haulier::clearRoutes( void ) {
+	if(!routes.empty())
+		std::queue<HaulierRoute*>().swap(routes);
+}
+
+void Haulier::onHalt( void ) {
+	currentRoute = NULL;
+	clearRoutes();
+}
+
+void Haulier::onRender( Uint32 deltaTime )
+{
 	if(routes.empty()) {
-		stop();
+		stop(Modifier::StopState::NATURAL);
 		return;
 	}
 	target->getPosition(&curPos);
@@ -65,7 +76,7 @@ void Haulier::move( Uint32 deltaTime ) {
 	curPos.x = ceil(Ease::get(currentRoute->easeType, deltaTime, currentRoute->fromX, currentRoute->dX, currentRoute->duration));
 	curPos.y = ceil(Ease::get(currentRoute->easeType, deltaTime, currentRoute->fromY, currentRoute->dY, currentRoute->duration));
 	//printf("Time: %d/%u Current Pos:(%d, %d) Delta:(%d, %d)\n", deltaTime, currentRoute->duration, curPos.x, curPos.y, currentRoute->dX, currentRoute->dY);
-	
+
 	target->translate(&curPos);
 
 	if (deltaTime == currentRoute->duration) {
@@ -73,26 +84,6 @@ void Haulier::move( Uint32 deltaTime ) {
 		currentRoute = NULL;
 		resetTimer(); // reset timer
 	}
-		
-}
-
-
-
-void Haulier::preRender( void ) {
-	if(startTime != NULL) { // set this NULL to stop/bypass
-		move(SDL_GetTicks() - startTime);
-	}
-}
-
-
-void Haulier::clearRoutes( void ) {
-	if(!routes.empty())
-		std::queue<HaulierRoute*>().swap(routes);
-}
-
-void Haulier::onHalt( void ) {
-	currentRoute = NULL;
-	clearRoutes();
 }
 
 
