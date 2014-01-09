@@ -1,22 +1,21 @@
 #include "stdafx.h"
 #include "Config.h"
+#include <iostream>
+#include "MetaParser.h"
 
-#define CONFIG_WINDOW_WIDTH "window::width"
 Config::Config(void){
-	blockKeys.push_back(string("root"));
+
+	
+	//mapping["window:height"] = MetaStruct(&window.height);
+	//mapping["window:width"] = MetaStruct(&window.width);
+	addMapping("window:height", &window.height);
+	addMapping("window:width", &window.width);
+	addMapping("window:title", &window.title);
 	parse("config.yml");
-}
-
-
-Config::~Config(void)
-{
-}
-
-
-void Config::onValueRead(string *path, string* key, string* value) {
-	string fullpath = *path + *key;
-	
-	printf("\n%s = %s", fullpath.c_str(), value->c_str());
-
 	
 }
+
+
+Config::~Config(void) {
+}
+

@@ -1,5 +1,7 @@
 #pragma once
 #include "metaparser.h"
+#include <map>
+#include <iostream>
 
 using namespace std;
 class Config :	public MetaParser {
@@ -7,13 +9,13 @@ public:
 	
 	Config(void);
 	~Config(void);
-	virtual void onValueRead(string *path, string* key, string* value);
 	struct WindowStruct {
+		string title;
 		int width;
 		int height;
-	} Window;
+	} window;
 private:
 	
-
+	
 };
 

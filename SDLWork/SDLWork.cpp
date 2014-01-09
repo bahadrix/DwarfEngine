@@ -13,16 +13,20 @@
 #include "CharacterFour.h"
 #include "MetaParser.h"
 #include "Config.h"
+#include <typeinfo>
 
+Config *cfg;
 
 void readConfig() {
-	Config *cfg = new Config();
+	cfg = new Config();
+	printf("\nwidth: %d",cfg->window.width);
+	
 }
 
 int _tmain(int argc, _TCHAR* argv[]) {
 	readConfig();
 	try {
-        Window::Init("Living Bunkies");
+        Window::Init(cfg->window.title);
     } catch (const std::runtime_error &e){
         std::cout << e.what() << std::endl;
         Window::Quit();

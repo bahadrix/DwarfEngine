@@ -1,0 +1,8 @@
+window:
+    title: Sebai Dubai
+    width: 800
+    height: 600
+    color:
+        r: 200
+        g: 100
+        b: 50
