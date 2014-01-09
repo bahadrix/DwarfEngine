@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDLWork", "SDLWork\SDLWork.vcxproj", "{C07C195A-9DEB-4C03-A14A-D63E39257AD6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YAMLMapper", "YAMLMapper\YAMLMapper.vcxproj", "{808A0779-3C39-4E31-A744-C72D3D0BB51F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{C07C195A-9DEB-4C03-A14A-D63E39257AD6}.Debug|Win32.Build.0 = Debug|Win32
 		{C07C195A-9DEB-4C03-A14A-D63E39257AD6}.Release|Win32.ActiveCfg = Release|Win32
 		{C07C195A-9DEB-4C03-A14A-D63E39257AD6}.Release|Win32.Build.0 = Release|Win32
+		{808A0779-3C39-4E31-A744-C72D3D0BB51F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{808A0779-3C39-4E31-A744-C72D3D0BB51F}.Debug|Win32.Build.0 = Debug|Win32
+		{808A0779-3C39-4E31-A744-C72D3D0BB51F}.Release|Win32.ActiveCfg = Release|Win32
+		{808A0779-3C39-4E31-A744-C72D3D0BB51F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

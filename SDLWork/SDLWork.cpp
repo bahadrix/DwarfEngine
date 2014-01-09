@@ -11,7 +11,7 @@
 #include "SceneObjects.h"
 #include "SpriteDwarf.h"
 #include "CharacterFour.h"
-#include "MetaParser.h"
+
 #include "Config.h"
 #include <typeinfo>
 

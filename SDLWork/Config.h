@@ -1,10 +1,10 @@
 #pragma once
-#include "metaparser.h"
+#include "YAMLMapper.h"
 #include <map>
 #include <iostream>
 
 using namespace std;
-class Config :	public MetaParser {
+class Config :	public YAMLMapper {
 public:
 	
 	Config(void);

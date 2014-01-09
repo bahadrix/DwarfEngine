@@ -11,19 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C07C195A-9DEB-4C03-A14A-D63E39257AD6}</ProjectGuid>
+    <ProjectGuid>{808A0779-3C39-4E31-A744-C72D3D0BB51F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SDLWork</RootNamespace>
+    <RootNamespace>YAMLMapper</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -50,15 +50,17 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;YAMLMAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\HOME\SDL2-2.0.1\include;C:\HOME\SDL2-2.0.1\additional\SDL2_image-2.0.0\include;C:\HOME\SDL2-2.0.1\additional\SDL2_ttf-2.0.12\include;%(AdditionalIncludeDirectories);C:\HOME\CLIBS\libyaml\include;C:\Users\Bahadir\Documents\GitHub\DwarfEngine\YAMLMapper</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HOME\CLIBS\libyaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\HOME\CLIBS\libyaml\lib;C:\HOME\SDL2-2.0.1\lib\x86;C:\HOME\SDL2-2.0.1\additional\SDL2_image-2.0.0\lib\x86;C:\HOME\SDL2-2.0.1\additional\SDL2_ttf-2.0.12\lib\x86;C:\HOME\yamlcpp-build\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2Main.lib;SDL2_image.lib;yaml.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\HOME\CLIBS\libyaml\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yaml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ForceSymbolReferences>
+      </ForceSymbolReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -68,67 +70,39 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;YAMLMAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\boost;C:\HOME\SDL2-2.0.1\include;C:\HOME\SDL2-2.0.1\additional\SDL2_image-2.0.0\include;%(AdditionalIncludeDirectories);C:\HOME\CLIBS\libyaml\include;C:\Users\Bahadir\Documents\GitHub\DwarfEngine\YAMLMapper</AdditionalIncludeDirectories>
-      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\HOME\CLIBS\libyaml\lib;C:\HOME\SDL2-2.0.1\lib\x86;C:\HOME\SDL2-2.0.1\additional\SDL2_image-2.0.0\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2Main.lib;SDL2_image.lib;yaml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ForceSymbolReferences>/INCLUDE</ForceSymbolReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CharacterFour.h" />
-    <ClInclude Include="Config.h" />
-    <ClInclude Include="Dwarf.h" />
-    <ClInclude Include="Ease.h" />
-    <ClInclude Include="Haulier.h" />
-    <ClInclude Include="Modifier.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="SceneDirector.h" />
-    <ClInclude Include="SceneObjects.h" />
-    <ClInclude Include="SpriteAnimator.h" />
-    <ClInclude Include="SpriteDwarf.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="YAMLMapper.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CharacterFour.cpp" />
-    <ClCompile Include="Config.cpp" />
-    <ClCompile Include="Dwarf.cpp" />
-    <ClCompile Include="Ease.cpp" />
-    <ClCompile Include="Haulier.cpp" />
-    <ClCompile Include="Modifier.cpp" />
-    <ClCompile Include="SceneDirector.cpp" />
-    <ClCompile Include="SceneObjects.cpp" />
-    <ClCompile Include="SDLWork.cpp" />
-    <ClCompile Include="SpriteAnimator.cpp" />
-    <ClCompile Include="SpriteDwarf.cpp" />
+    <ClCompile Include="dllmain.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SDLWork.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\Users\vaıo\Desktop\1388791303_190305.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\YAMLMapper\YAMLMapper.vcxproj">
-      <Project>{808a0779-3c39-4e31-a744-c72d3d0bb51f}</Project>
-    </ProjectReference>
+    <ClCompile Include="YAMLMapper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
