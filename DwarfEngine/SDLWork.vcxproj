@@ -14,6 +14,7 @@
     <ProjectGuid>{C07C195A-9DEB-4C03-A14A-D63E39257AD6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SDLWork</RootNamespace>
+    <ProjectName>Dwarf</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -52,7 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\HOME\SDL2-2.0.1\include;C:\HOME\SDL2-2.0.1\additional\SDL2_image-2.0.0\include;C:\HOME\SDL2-2.0.1\additional\SDL2_ttf-2.0.12\include;%(AdditionalIncludeDirectories);C:\HOME\CLIBS\libyaml\include;C:\Users\Bahadir\Documents\GitHub\DwarfEngine\YAMLMapper</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HOME\SDL2-2.0.1\include;C:\HOME\SDL2-2.0.1\additional\SDL2_image-2.0.0\include;C:\HOME\SDL2-2.0.1\additional\SDL2_ttf-2.0.12\include;%(AdditionalIncludeDirectories);C:\HOME\CLIBS\libyaml\include;..\YAMLMapper</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
