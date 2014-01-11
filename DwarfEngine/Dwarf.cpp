@@ -19,7 +19,17 @@ void Dwarf::init( SDL_Renderer* renderer, Dwarf *parent ) {
 	SDL_Rect initialDstRect = {0,0,0,0};
 	this->srcRect = &initialSrcRect;
 	this->dstRect = &initialDstRect;
+	if(parent == NULL) {
 
+		parentDst = new SDL_Rect;
+		parentDst->w = 0;
+		parentDst->h = 0;
+		parentDst->x = 0;
+		parentDst->y = 0;
+
+	} else {
+		parentDst = parent->dstRect;
+	}
 	this->name = "<noname>";
 }
 Dwarf* Dwarf::breed() {
@@ -90,6 +100,16 @@ void Dwarf::translateDelta( int dx, int dy ) {
 		children.at(c)->translateDelta(dx, dy);
 }
 
+//Translate to point on the parent
+void Dwarf::translateOnScreen( int x, int y ) {
+	//x,y: position on parent local
+	//dstRect: position screen
+	translateDelta(x - dstRect->x - parentDst->x, y - dstRect->y - parentDst->y);
+}
+
+void Dwarf::translateOnScreen( SDL_Point *destination ) {
+	translateOnScreen(destination->x, destination->y);
+}
 
 void Dwarf::onMouseEvent( SDL_Event *event ) {
 
@@ -117,28 +137,39 @@ void Dwarf::preRender( void ) {
 void Dwarf::addModifier( Modifier* modifier ) {
 	modifier->target = this;
 	modifiers.push_back(modifier);
-	
+	modifier->onAttached();
 }
 
-void Dwarf::translate( int x, int y ) {
-	translateDelta(x - dstRect->x, y - dstRect->y);
-}
 
-void Dwarf::translate( SDL_Point *destination ) {
-	translate(destination->x, destination->y);
-}
 
-void Dwarf::getPosition( SDL_Point *point ) {
+void Dwarf::getPositionOnScreen( SDL_Point *point ) {
 	point->x = dstRect->x;
 	point->y = dstRect->y;
 }
 
-void Dwarf::getDstRect( SDL_Rect *rect ){
+
+void Dwarf::getPosition( SDL_Point *point ){
+	point->x = dstRect->x - parentDst->x;
+	point->y = dstRect->y - parentDst->y;
+}
+
+
+void Dwarf::getDstRectOnScreen( SDL_Rect *rect ){
 	rect->x = dstRect->x;
 	rect->y = dstRect->y;
 	rect->w = dstRect->w;
 	rect->h = dstRect->h;
 }
+void Dwarf::getDstRect( SDL_Rect *rect ){
+
+	rect->x = dstRect->x - parentDst->x;
+	rect->y = dstRect->y - parentDst->y;
+	rect->w = dstRect->w;
+	rect->h = dstRect->h;
+
+
+}
+
 void Dwarf::getSrcRect( SDL_Rect *rect )
 {
 	rect->x = srcRect->x;
@@ -160,6 +191,8 @@ void Dwarf::setSrcRect( SDL_Rect *rect ){
 
 
 void Dwarf::onModifierStop( char* name, Modifier::StopState state){}
+
+
 
 
 

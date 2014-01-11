@@ -24,6 +24,7 @@ public:
 
 	virtual void onRender(Uint32 deltaTime);
 	virtual void onHalt(void);
+	virtual void onAttached(void);
 	//fromX,fromY koordinatlarindan baslayarak gider
 	void addRoute(int fromX, int fromY, int toX, int toY, int duration, EaseType easeType);
 	//Nerdeyse ordan baslar gider
@@ -33,7 +34,7 @@ public:
 private:
 	//execute all routes
 	void move(Uint32 deltaTime);
-
+	SDL_Point *lastKnownPosition;
 	std::queue<HaulierRoute*> routes;
 	HaulierRoute* currentRoute;
 	SDL_Point curPos;

@@ -15,12 +15,14 @@ public:
 
 	virtual void setTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, double* angle = nullptr, SDL_Point* pivot = NULL, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE);
 	void translateDelta(int dx, int dy);
-	void translate(int x, int y);
-	void translate(SDL_Point *destination);
+	void translateOnScreen(int x, int y);
+	void translateOnScreen(SDL_Point *destination);
 	Dwarf* breed();
 	void adopt(Dwarf* child);
 	bool isInRect(int x, int y);
+	void getPositionOnScreen(SDL_Point *point);
 	void getPosition(SDL_Point *point);
+	void getDstRectOnScreen(SDL_Rect *rect);
 	void getDstRect(SDL_Rect *rect);
 	void getSrcRect(SDL_Rect *rect);
 	void setSrcRect(SDL_Rect *rect);
@@ -34,7 +36,7 @@ private:
 	
 	void init(SDL_Renderer* renderer, Dwarf *parent);
 	
-	
+	SDL_Rect *parentDst; //on screen destination of parent, zero-fill if null
 	SDL_Rect* srcRect;
 	SDL_Rect* dstRect;
 	double* angle;

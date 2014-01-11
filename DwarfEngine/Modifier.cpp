@@ -80,3 +80,5 @@ void Modifier::setName( char* name )
 
 void Modifier::onStop( void ){}
 
+void Modifier::onAttached( void ){}
+

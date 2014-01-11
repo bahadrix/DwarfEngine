@@ -13,6 +13,7 @@ public:
 	virtual void onRender(Uint32 deltaTime);
 	virtual void onHalt(void);
 	virtual void onStop(void);
+	virtual void onAttached(void);
 	void start(void);
 	void stop(void);
 	void halt(void);

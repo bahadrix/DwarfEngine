@@ -41,7 +41,7 @@ void CharacterFour::move( Direction direction, int delta, Uint16 duration, EaseT
 	animator->halt();
 
 	SDL_Point pos;
-	getPosition(&pos);
+	getPositionOnScreen(&pos);
 
 	haulier->halt();
 	int x,y;
@@ -66,7 +66,7 @@ void CharacterFour::onMouseEvent( SDL_Event *event ) {
 	if(event->type == SDL_MOUSEBUTTONDOWN) {	
 		breakMove();
 		SDL_Rect rect;
-		getDstRect(&rect);
+		getDstRectOnScreen(&rect);
 		HaulierRoute *x_route = new HaulierRoute;
 		HaulierRoute *y_route = new HaulierRoute;
 		
@@ -96,7 +96,7 @@ void CharacterFour::followRoute( void ){
 		return;
 	
 	SDL_Point pos;
-	getPosition(&pos);
+	getPositionOnScreen(&pos);
 
 	HaulierRoute *path = route.front();
 	printf("\nRoute: from(%d,%d) to: (%d, %d)", pos.x, pos.y, pos.x + path->dX, pos.y + path->dY);
