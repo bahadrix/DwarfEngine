@@ -1,25 +1,23 @@
-========================================================================
-    DYNAMIC LINK LIBRARY : YAMLMapper Project Overview
-========================================================================
+# YAML Direct Mapping Library
+
 
 This library gives the ability that enables direct mapping from yaml to C variable.
 
 Example:
 
-	Sample YAML File:
-	sprite:
-		cell_size: [64,64] #width, height in pixels
-
-	Code For Mapping:
-
-	YAMLMapper *spriteMeta = new YAMLMapper();
-
-	SDL_Point spriteSize;
-	spriteMeta->addMapping("sprite:cell_size", &spriteSize.x, 0);
-	spriteMeta->addMapping("sprite:cell_size", &spriteSize.y, 1);
-
-	spriteMeta->parse("res/img/sprites.meta");
-
+Sample YAML File:
+```YAML
+sprite:
+	cell_size: [64,64] #width, height in pixels
+```
+Code For Mapping:
+```C
+YAMLMapper *spriteMeta = new YAMLMapper();
+SDL_Point spriteSize;
+spriteMeta->addMapping("sprite:cell_size", &spriteSize.x, 0);
+spriteMeta->addMapping("sprite:cell_size", &spriteSize.y, 1);
+spriteMeta->parse("sample.yml");
+```
 
 Currently Provided Features:
 - Mappings of scalars to scalars
