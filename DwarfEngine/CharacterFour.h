@@ -12,6 +12,8 @@ using namespace std;
 class CharacterFour : public SpriteDwarf {
 public:
 	static enum class Direction{VERTICAL, HORIZONTAL};
+	static CharacterFour* createFromMeta(const char* file);
+	
 	int speed;
 	SDL_Point focusPoint;
 	CharacterFour(void);
@@ -23,6 +25,7 @@ public:
 	void addPath(HaulierRoute *path);
 	void followRoute(void);
 	void breakMove(void);
+
 private:
 	Haulier *haulier;
 	SpriteAnimator *animator;

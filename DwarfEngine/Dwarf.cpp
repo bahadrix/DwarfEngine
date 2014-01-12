@@ -127,9 +127,13 @@ bool Dwarf::isInRect( int x, int y ) {
 
 
 void Dwarf::preRender( void ) {
-	
+	/*
 	for(std::vector<Modifier*>::iterator modifierIterator = modifiers.begin(); modifierIterator != modifiers.end(); ++modifierIterator) {
 		(*modifierIterator)->preRender(); 
+	}
+	*/
+	for(int i = 0; i < modifiers.size(); i++) {
+		modifiers.at(i)->preRender();
 	}
 	
 }

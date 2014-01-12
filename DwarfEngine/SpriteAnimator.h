@@ -15,8 +15,8 @@ struct AnimationItem {
 };
 
 struct SpriteSlice {
-	Uint16 from;
-	Uint16 length;
+	int from;
+	int length;
 };
 
 class SpriteAnimator :	public Modifier {

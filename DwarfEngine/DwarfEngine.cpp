@@ -7,30 +7,29 @@
 #include <SDL_ttf.h>
 #include <vector>
 
-#include "Window.h"
+#include "DwarfEngine.h"
 #include <queue>
 
 //Initialize the unique_ptr's deleters here
-std::unique_ptr<SDL_Window, void (*)(SDL_Window*)> Window::mWindow 
+std::unique_ptr<SDL_Window, void (*)(SDL_Window*)> DwarfEngine::mWindow 
         = std::unique_ptr<SDL_Window, void (*)(SDL_Window*)>(nullptr, SDL_DestroyWindow);
-std::unique_ptr<SDL_Renderer, void (*)(SDL_Renderer*)> Window::mRenderer
+std::unique_ptr<SDL_Renderer, void (*)(SDL_Renderer*)> DwarfEngine::mRenderer
         = std::unique_ptr<SDL_Renderer, void (*)(SDL_Renderer*)>(nullptr, SDL_DestroyRenderer);
 //Other static members
-SDL_Rect Window::mBox;
+SDL_Rect DwarfEngine::mBox;
+Dwarf *DwarfEngine::eve;
+std::vector<Dwarf*> DwarfEngine::mouseListeners;
+std::vector<Dwarf*> *DwarfEngine::renderQueue;
+std::vector<Dwarf*>::iterator DwarfEngine::renderIterator;
+std::queue<Dwarf*> DwarfEngine::que;
 
-Dwarf *Window::eve;
-std::vector<Dwarf*> Window::mouseListeners;
-std::vector<Dwarf*> *Window::renderQueue;
-std::vector<Dwarf*>::iterator Window::renderIterator;
-std::queue<Dwarf*> Window::que;
-
-void Window::Init(std::string title){
+void DwarfEngine::Init(std::string title){
     //initialize all SDL subsystems
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
                 throw std::runtime_error("SDL Init Failed");
     if (TTF_Init() == -1)
                 throw std::runtime_error("TTF Init Failed");
-
+	
     //Setup our window size
     mBox.x = 0;
     mBox.y = 0;
@@ -48,16 +47,16 @@ void Window::Init(std::string title){
     //Make sure it created ok
     if (mRenderer == nullptr)
         throw std::runtime_error("Failed to create renderer");
-	Window::eve = new Dwarf(mRenderer.get());
-	Window::eve->name = "Eve";
+	DwarfEngine::eve = new Dwarf(mRenderer.get());
+	DwarfEngine::eve->name = "Eve";
 	renderQueue = new std::vector<Dwarf*>();
 }
-void Window::Quit(){
+void DwarfEngine::Quit(){
     delete eve;
 	TTF_Quit();
     SDL_Quit();
 }
-void Window::Draw(SDL_Texture *tex, SDL_Rect &dstRect, SDL_Rect *clip, float angle, 
+void DwarfEngine::Draw(SDL_Texture *tex, SDL_Rect &dstRect, SDL_Rect *clip, float angle, 
                   int xPivot, int yPivot, SDL_RendererFlip flip)
 {
     //Convert pivot pos from relative to object's top-left corner to be relative to its center
@@ -68,14 +67,14 @@ void Window::Draw(SDL_Texture *tex, SDL_Rect &dstRect, SDL_Rect *clip, float ang
     //Draw the texture
     SDL_RenderCopyEx(mRenderer.get(), tex, clip, &dstRect, angle, &pivot, flip);
 }
-SDL_Texture* Window::LoadImage(const std::string &file){
+SDL_Texture* DwarfEngine::LoadImage(const std::string &file){
     SDL_Texture* tex = nullptr;
     tex = IMG_LoadTexture(mRenderer.get(), file.c_str());
     if (tex == nullptr)
         throw std::runtime_error("Failed to load image: " + file + IMG_GetError());
     return tex;
 }
-SDL_Texture* Window::RenderText(const std::string &message, const std::string &fontFile, SDL_Color color, int fontSize){
+SDL_Texture* DwarfEngine::RenderText(const std::string &message, const std::string &fontFile, SDL_Color color, int fontSize){
     //Open the font
     TTF_Font *font = nullptr;
     font = TTF_OpenFont(fontFile.c_str(), fontSize);
@@ -91,29 +90,29 @@ SDL_Texture* Window::RenderText(const std::string &message, const std::string &f
 
     return texture;
 }
-void Window::Clear(){
+void DwarfEngine::Clear(){
     SDL_RenderClear(mRenderer.get());
 }
-void Window::Present(){
+void DwarfEngine::Present(){
     SDL_RenderPresent(mRenderer.get());
 }
-SDL_Rect Window::Box(){
+SDL_Rect DwarfEngine::Box(){
     //Update mBox to match the current window size
     SDL_GetWindowSize(mWindow.get(), &mBox.w, &mBox.h);
     return mBox;
 }
 
-void Window::registerMouseListener( Dwarf *dwarf ) {
+void DwarfEngine::registerMouseListener( Dwarf *dwarf ) {
 	mouseListeners.push_back(dwarf);
 }
 
-void Window::onMouseEvent( SDL_Event *event ) {
+void DwarfEngine::onMouseEvent( SDL_Event *event ) {
 	for(int i = 0; i < mouseListeners.size(); i++) {
 		mouseListeners.at(i)->onMouseEvent(event);
 	}
 }
 
-void Window::render() {
+void DwarfEngine::render() {
 
 	//Render by BFS
 

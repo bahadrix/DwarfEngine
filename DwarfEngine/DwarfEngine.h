@@ -12,7 +12,7 @@
 *  Window management class, provides a simple wrapper around
 *  the SDL_Window and SDL_Renderer functionalities
 */
-class Window {
+class DwarfEngine {
 public:
 
     static void Init(std::string title = "Window");

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CharacterFour.h"
-
+#include "YAMLMapper.h"
+#include "DwarfEngine.h"
 
 CharacterFour::CharacterFour(void){
 	haulier = new Haulier();
@@ -12,9 +13,6 @@ CharacterFour::CharacterFour(void){
 	
 	this->speed = 100;
 	
-	
-	
-
 }
 
 
@@ -97,7 +95,7 @@ void CharacterFour::followRoute( void ){
 	getPositionOnScreen(&pos);
 
 	HaulierRoute *path = route.front();
-	printf("\nRoute: from(%d,%d) to: (%d, %d)", pos.x, pos.y, pos.x + path->dX, pos.y + path->dY);
+	printf("\n%s Route: from(%d,%d) to: (%d, %d)", name.c_str(), pos.x, pos.y, pos.x + path->dX, pos.y + path->dY);
 	if (path->dX != 0) {
 		move(Direction::HORIZONTAL, path->dX, path->duration, path->easeType); 
 		printf(" Horizontal");
@@ -125,4 +123,52 @@ void CharacterFour::onModifierStop( char* name, Modifier::StopState state ) {
 void CharacterFour::breakMove( void ){
 	haulier->halt();
 	queue<HaulierRoute*>().swap(route);
+}
+
+CharacterFour* CharacterFour::createFromMeta( const char* file ){
+
+	CharacterFour* character4 = new CharacterFour();
+
+	SpriteSlice upSlice, downSlice, leftSlice, rightSlice;
+
+	YAMLMapper mapper = YAMLMapper();
+
+	mapper.addMapping("char4:slices:up", &upSlice.from,0);
+	mapper.addMapping("char4:slices:up", &upSlice.length,1);
+
+	mapper.addMapping("char4:slices:down", &downSlice.from,0);
+	mapper.addMapping("char4:slices:down", &downSlice.length,1);
+
+	mapper.addMapping("char4:slices:left", &leftSlice.from,0);
+	mapper.addMapping("char4:slices:left", &leftSlice.length,1);
+
+	mapper.addMapping("char4:slices:right", &rightSlice.from,0);
+	mapper.addMapping("char4:slices:right", &rightSlice.length,1);
+
+	string textureFile;
+
+	mapper.addMapping("char4:file", &textureFile,0);
+	SDL_Rect *sourceRect = new SDL_Rect;
+	SDL_Rect *destRect = new SDL_Rect;
+
+	mapper.addMapping("char4:cell", &sourceRect->x, 0);
+	mapper.addMapping("char4:cell", &sourceRect->y, 1);
+	mapper.addMapping("char4:cell", &sourceRect->w, 2);
+	mapper.addMapping("char4:cell", &sourceRect->h, 3);
+
+	
+
+	mapper.parse(file);
+
+	destRect->x = 0;
+	destRect->y = 0;
+	destRect->w = sourceRect->w;
+	destRect->h = sourceRect->h;
+
+
+	SDL_Texture *texture = DwarfEngine::LoadImage(textureFile.c_str());
+
+	character4->setTexture(upSlice, downSlice, leftSlice, rightSlice, texture, sourceRect, destRect);
+
+	return character4;
 }
