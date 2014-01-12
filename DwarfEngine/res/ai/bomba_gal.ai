@@ -1,0 +1,5 @@
+-- Initiate the char
+function init()
+	-- io.write("bomba gal ready")
+	sendMessage()
+end

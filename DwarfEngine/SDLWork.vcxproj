@@ -53,13 +53,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\HOME\SDL2-2.0.1\include;C:\HOME\SDL2-2.0.1\additional\SDL2_image-2.0.0\include;C:\HOME\SDL2-2.0.1\additional\SDL2_ttf-2.0.12\include;%(AdditionalIncludeDirectories);C:\HOME\CLIBS\libyaml\include;..\YAMLMapper</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\HOME\Lua\5.1\include;C:\HOME\SDL2-2.0.1\include;C:\HOME\SDL2-2.0.1\additional\SDL2_image-2.0.0\include;C:\HOME\SDL2-2.0.1\additional\SDL2_ttf-2.0.12\include;%(AdditionalIncludeDirectories);C:\HOME\CLIBS\libyaml\include;..\YAMLMapper</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\HOME\CLIBS\libyaml\lib;C:\HOME\SDL2-2.0.1\lib\x86;C:\HOME\SDL2-2.0.1\additional\SDL2_image-2.0.0\lib\x86;C:\HOME\SDL2-2.0.1\additional\SDL2_ttf-2.0.12\lib\x86;C:\HOME\yamlcpp-build\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2Main.lib;SDL2_image.lib;yaml.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\HOME\Lua\5.1\lib;C:\HOME\CLIBS\libyaml\lib;C:\HOME\SDL2-2.0.1\lib\x86;C:\HOME\SDL2-2.0.1\additional\SDL2_image-2.0.0\lib\x86;C:\HOME\SDL2-2.0.1\additional\SDL2_ttf-2.0.12\lib\x86;C:\HOME\yamlcpp-build\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2Main.lib;SDL2_image.lib;yaml.lib;SDL2_ttf.lib;lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -87,6 +87,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Brain.h" />
     <ClInclude Include="CharacterFour.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Dwarf.h" />
@@ -96,6 +97,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneDirector.h" />
     <ClInclude Include="SceneObjects.h" />
+    <ClInclude Include="Script.h" />
     <ClInclude Include="SpriteAnimator.h" />
     <ClInclude Include="SpriteDwarf.h" />
     <ClInclude Include="stdafx.h" />
@@ -103,6 +105,7 @@
     <ClInclude Include="DwarfEngine.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Brain.cpp" />
     <ClCompile Include="CharacterFour.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Dwarf.cpp" />

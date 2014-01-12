@@ -30,6 +30,8 @@ void CharacterFour::setTexture( SpriteSlice upSlice, SpriteSlice downSlice, Spri
 
 	this->focusPoint.x = dstRect->w/2;
 	this->focusPoint.y = dstRect->h/2;
+
+
 }
 
 
@@ -156,9 +158,15 @@ CharacterFour* CharacterFour::createFromMeta( const char* file ){
 	mapper.addMapping("char4:cell", &sourceRect->w, 2);
 	mapper.addMapping("char4:cell", &sourceRect->h, 3);
 
-	
+	string name;
+	mapper.addMapping("char4:name", &name,0);
+
+	string aifile = "";
+	mapper.addMapping("char4:ai", &aifile);
 
 	mapper.parse(file);
+
+	character4->name = name;
 
 	destRect->x = 0;
 	destRect->y = 0;
@@ -167,8 +175,22 @@ CharacterFour* CharacterFour::createFromMeta( const char* file ){
 
 
 	SDL_Texture *texture = DwarfEngine::LoadImage(textureFile.c_str());
-
 	character4->setTexture(upSlice, downSlice, leftSlice, rightSlice, texture, sourceRect, destRect);
 
+	if(!aifile.empty()) {
+		character4->brain = new Brain();
+		character4->brain->startThinking(aifile.c_str());
+	}
+	
+
+	
+
+	
+
 	return character4;
+}
+
+void CharacterFour::startAI( void )
+{
+
 }

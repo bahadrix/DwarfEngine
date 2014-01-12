@@ -7,7 +7,7 @@
 #include "Dwarf.h"
 #include <vector>
 #include <queue>
-
+#include "Script.h"
 /**
 *  Window management class, provides a simple wrapper around
 *  the SDL_Window and SDL_Renderer functionalities

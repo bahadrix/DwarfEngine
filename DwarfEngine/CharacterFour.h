@@ -3,6 +3,7 @@
 #include "Haulier.h"
 #include "SpriteAnimator.h"
 #include <queue>
+#include "Brain.h"
 
 #define TAG_CHARACTER_HAULIER "tag_char_haulier"
 
@@ -25,7 +26,8 @@ public:
 	void addPath(HaulierRoute *path);
 	void followRoute(void);
 	void breakMove(void);
-
+	void startAI(void);
+	Brain *brain;
 private:
 	Haulier *haulier;
 	SpriteAnimator *animator;
