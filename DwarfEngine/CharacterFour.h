@@ -23,7 +23,6 @@ public:
 	void addPath(HaulierRoute *path);
 	void followRoute(void);
 	void breakMove(void);
-	static CharacterFour* createFromMetaFile(const char* filePath);
 private:
 	Haulier *haulier;
 	SpriteAnimator *animator;
