@@ -5,7 +5,7 @@
 
 
 Haulier::Haulier(void) {
-	
+
 	stop();
 }
 
@@ -63,7 +63,11 @@ void Haulier::onRender( Uint32 deltaTime )
 	}
 	target->getPositionOnScreen(&curPos);
 
-	if(currentRoute == NULL) {
+	if(currentRoute == NULL) { // Select next route
+		dist.x = 0;
+		dist.y = 0;
+		lastDist.x = 0;
+		lastDist.y = 0;
 		currentRoute = routes.front();
 		if(currentRoute->fromX == NULL) {
 			currentRoute->fromX = curPos.x;
@@ -78,16 +82,16 @@ void Haulier::onRender( Uint32 deltaTime )
 	if(deltaTime > currentRoute->duration)
 		deltaTime = currentRoute->duration;
 
-	curPos.x = Ease::get(currentRoute->easeType, deltaTime, currentRoute->fromX, currentRoute->dX, currentRoute->duration);
-	curPos.y = Ease::get(currentRoute->easeType, deltaTime, currentRoute->fromY, currentRoute->dY, currentRoute->duration);
+	dist.x = Ease::get(currentRoute->easeType, deltaTime, 0, currentRoute->dX, currentRoute->duration);
+	dist.y = Ease::get(currentRoute->easeType, deltaTime, 0, currentRoute->dY, currentRoute->duration);
 	//printf("Time: %d/%u Current Pos:(%d, %d) Delta:(%d, %d)\n", deltaTime, currentRoute->duration, curPos.x, curPos.y, currentRoute->dX, currentRoute->dY);
 	
 	//target->translateOnScreen(&curPos);
 
-	target->translateDelta(lastKnownPosition->x - curPos.x, lastKnownPosition->y - curPos.y );
+	target->translateDelta(dist.x - lastDist.x, dist.y - lastDist.y );
 
-	lastKnownPosition->x = curPos.x;
-	lastKnownPosition->y = curPos.y;
+	lastDist.x = dist.x;
+	lastDist.y = dist.y;
 
 	if (deltaTime == currentRoute->duration) {
 		routes.pop();

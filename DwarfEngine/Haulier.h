@@ -34,10 +34,10 @@ public:
 private:
 	//execute all routes
 	void move(Uint32 deltaTime);
-	SDL_Point *lastKnownPosition;
 	std::queue<HaulierRoute*> routes;
 	HaulierRoute* currentRoute;
-	SDL_Point curPos;
+	SDL_Point curPos, delta, dist, lastDist;
+
 	void clearRoutes(void);
 
 };

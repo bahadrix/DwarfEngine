@@ -104,7 +104,7 @@ void Dwarf::translateDelta( int dx, int dy ) {
 void Dwarf::translateOnScreen( int x, int y ) {
 	//x,y: position on parent local
 	//dstRect: position screen
-	translateDelta(x - dstRect->x - parentDst->x, y - dstRect->y - parentDst->y);
+	translateDelta(x - dstRect->x, y - dstRect->y);
 }
 
 void Dwarf::translateOnScreen( SDL_Point *destination ) {

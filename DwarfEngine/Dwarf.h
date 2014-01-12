@@ -15,8 +15,7 @@ public:
 
 	virtual void setTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, double* angle = nullptr, SDL_Point* pivot = NULL, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE);
 	void translateDelta(int dx, int dy);
-	void translateOnScreen(int x, int y);
-	void translateOnScreen(SDL_Point *destination);
+
 	Dwarf* breed();
 	void adopt(Dwarf* child);
 	bool isInRect(int x, int y);
@@ -32,8 +31,11 @@ public:
 	std::vector<Dwarf*> children;
 	virtual void onTextureSet(void);
 	virtual void onModifierStop(char* name, Modifier::StopState state);
-private:
 	
+private:
+	//Dwarves must be translated relatively to parent, not directly to the screen.
+	void translateOnScreen(int x, int y);
+	void translateOnScreen(SDL_Point *destination);
 	void init(SDL_Renderer* renderer, Dwarf *parent);
 	
 	SDL_Rect *parentDst; //on screen destination of parent, zero-fill if null

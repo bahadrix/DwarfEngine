@@ -18,9 +18,17 @@
 Config *cfg;
 
 void readConfig() {
+	/*
+	YAMLMapper *spriteMeta = new YAMLMapper();
+
+	spriteMeta->parse("res/img/sprites.meta");
+	*/
 	cfg = new Config();
 	printf("\nwidth: %d",cfg->window.width);
 	
+
+	
+
 }
 
 int _tmain(int argc, _TCHAR* argv[]) {
