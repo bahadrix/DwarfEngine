@@ -18,16 +18,17 @@
 Config *cfg;
 
 void readConfig() {
-	/*
+	
 	YAMLMapper *spriteMeta = new YAMLMapper();
 
+	SDL_Point spriteSize;
+	spriteMeta->addMapping("sprite:cell_size", &spriteSize.x, 0);
+	spriteMeta->addMapping("sprite:cell_size", &spriteSize.y, 1);
+
 	spriteMeta->parse("res/img/sprites.meta");
-	*/
+	
 	cfg = new Config();
 	printf("\nwidth: %d",cfg->window.width);
-	
-
-	
 
 }
 

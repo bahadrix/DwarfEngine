@@ -33,6 +33,8 @@ void YAMLMapper::parse( const char* filename ) {
 	yaml_parser_initialize(&parser);
 	yaml_parser_set_input_file(&parser, file);
 
+	currentFlowIdx = 0;
+
 	while (!done)
 	{
 		if (!yaml_parser_scan(&parser, &token)) {
@@ -57,21 +59,28 @@ void YAMLMapper::parse( const char* filename ) {
 
 void YAMLMapper::onToken( yaml_token_t *token, yaml_token_type_t prevType ) {
 	if(token->type == YAML_SCALAR_TOKEN) { //scalar token
-		switch (prevType) {
-		case YAML_KEY_TOKEN:
+		if(prevType == YAML_KEY_TOKEN) {
 			lastKey = string((char*)token->data.scalar.value);
-			break;
-		case YAML_VALUE_TOKEN:
-			onValueRead(&getPath(&blockKeys), &lastKey, new string((char*)token->data.scalar.value));
-			break;
+		} else if (prevType == YAML_VALUE_TOKEN || prevType == YAML_FLOW_SEQUENCE_START_TOKEN || prevType == YAML_FLOW_ENTRY_TOKEN) {
+			onValueRead(&getPath(&blockKeys), &lastKey, new string((char*)token->data.scalar.value), currentFlowIdx);
 		}
+
 	} else { // other token
 		switch(token->type) {
 		case YAML_BLOCK_MAPPING_START_TOKEN:
 			blockKeys.push_back(lastKey);
 			break;
+		case YAML_BLOCK_SEQUENCE_START_TOKEN:
+			blockKeys.push_back(lastKey);
+			break;
 		case YAML_BLOCK_END_TOKEN:
 			blockKeys.pop_back();
+			break;
+		case YAML_FLOW_ENTRY_TOKEN:
+			currentFlowIdx++;
+			break;
+		case YAML_FLOW_SEQUENCE_END_TOKEN:
+			currentFlowIdx = 0;
 			break;
 		}
 
@@ -80,22 +89,21 @@ void YAMLMapper::onToken( yaml_token_t *token, yaml_token_type_t prevType ) {
 
 }
 
-void YAMLMapper::onValueRead(string *path, string* key, string* value){
-	string fullpath = (*path + *key);
+void YAMLMapper::onValueRead(string *path, string* key, string* value, unsigned int targetIdx /* = 0*/){
+	string fullpath = (*path + *key + ":[" + to_string(targetIdx) + "]");
 
 	try {
 		MetaStruct *meta = &mapping[fullpath];
-		if(meta->type == MetaType::UNKNOWN) {
-			throw InvalidValueTypeException("YAMLMapper Warning: " + fullpath + " is not registered");
+		
+		if(meta == NULL || meta->type == MetaStruct::MetaType::UNKNOWN) {
+			throw KeyNotRegisteredWarningException(fullpath);
 		}
 		meta->set(value->c_str());
-	} catch (InvalidValueTypeException& e) {
-		cerr << e.what() << " File: " << filename << endl;
+	} catch (KeyNotRegisteredWarningException& e) {
+		cerr << "YM:KeyNotRegistered:" << e.what() << " File: " << filename << endl;
 	} catch (std::invalid_argument) {
 		cerr << key << " value has an invalid type" << " File: " << filename << endl;
 	}
-
-
 }
 
 string YAMLMapper::getPath( vector<string> *path){
@@ -112,17 +120,17 @@ string YAMLMapper::getPath( vector<string> *path){
 	return pathString;
 }
 
-void YAMLMapper::addMapping( const char* keypath, int *pointer ){
-	mapping[keypath] = MetaStruct(pointer);
+void YAMLMapper::addMapping( string keypath, int *pointer, unsigned int targetIdx /*= 0*/ ){
+	mapping[keypath + ":[" + to_string(targetIdx) + "]"] =  MetaStruct(pointer);
 }
-void YAMLMapper::addMapping( const char* keypath, float *pointer ){
-	mapping[keypath] = MetaStruct(pointer);
+void YAMLMapper::addMapping( string keypath, float *pointer, unsigned int targetIdx /*= 0*/ ){
+	mapping[keypath + ":[" + to_string(targetIdx) + "]"] =  MetaStruct(pointer);
 }
-void YAMLMapper::addMapping( const char* keypath, double *pointer ){
-	mapping[keypath] = MetaStruct(pointer);
+void YAMLMapper::addMapping( string keypath, double *pointer, unsigned int targetIdx /*= 0*/ ){
+	mapping[keypath + ":[" + to_string(targetIdx) + "]"] =  MetaStruct(pointer);
 }
-void YAMLMapper::addMapping( const char* keypath, string *pointer ){
-	mapping[keypath] = MetaStruct(pointer);
+void YAMLMapper::addMapping( string keypath, string *pointer, unsigned int targetIdx /*= 0*/ ){
+	mapping[keypath + ":[" + to_string(targetIdx) + "]"] =  MetaStruct(pointer);
 }
 
 

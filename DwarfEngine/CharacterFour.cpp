@@ -86,8 +86,6 @@ void CharacterFour::onMouseEvent( SDL_Event *event ) {
 		addPath(y_route);
 
 		followRoute();
-		//move(Direction::HORIZONTAL, event->motion.x - rect.x, 5800, EaseType::LINEAR);
-		//printf("\nMoving to: %d, %d", event->motion.x, event->motion.y);
 	}
 }
 
