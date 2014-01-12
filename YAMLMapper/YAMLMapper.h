@@ -26,10 +26,12 @@ public:
 	YAMLMapper(void);
 	~YAMLMapper(void);
 	void parse(const char* filename);
+	
 	void addMapping(string keypath, int *pointer, unsigned int targetIdx = 0);
 	void addMapping(string keypath, float *pointer, unsigned int targetIdx = 0);
 	void addMapping(string keypath, double *pointer, unsigned int targetIdx = 0);
 	void addMapping(string keypath, string* pointer, unsigned int targetIdx = 0);
+
 
 private:
 	yaml_parser_t parser;
@@ -45,12 +47,15 @@ protected:
 	string lastBlockKey, lastKey;
 
 	static string getPath(vector<string> *path);
-	
-
 
 	std::map<string, MetaStruct> mapping;
 
 };
+
+
+
+
+
 
 
 

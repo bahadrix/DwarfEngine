@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CharacterFour.h"
-
+#include "YAMLMapper.h"
 
 CharacterFour::CharacterFour(void){
 	haulier = new Haulier();
@@ -125,4 +125,14 @@ void CharacterFour::onModifierStop( char* name, Modifier::StopState state ) {
 void CharacterFour::breakMove( void ){
 	haulier->halt();
 	queue<HaulierRoute*>().swap(route);
+}
+
+CharacterFour* CharacterFour::createFromMetaFile( const char* filePath ){
+	CharacterFour* char4 = new CharacterFour();
+
+	SpriteSlice upSlice, downSlice, leftSlice, rightSlice;
+	
+
+	YAMLMapper *meta = new YAMLMapper();
+	meta->addMapping("char4:slices:down", &downSlice.from, 0);
 }

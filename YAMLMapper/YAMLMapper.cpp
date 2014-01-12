@@ -120,6 +120,7 @@ string YAMLMapper::getPath( vector<string> *path){
 	return pathString;
 }
 
+
 void YAMLMapper::addMapping( string keypath, int *pointer, unsigned int targetIdx /*= 0*/ ){
 	mapping[keypath + ":[" + to_string(targetIdx) + "]"] =  MetaStruct(pointer);
 }
